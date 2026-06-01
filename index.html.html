@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Профессиональний автосервіс СТО у Нікополі. Діагностика, ремонт двигуна, ходова, електрика, шиномонтаж. Досвідчені майстри, гарантія на роботи.">
+<meta name="keywords" content="СТО Нікополь, автосервіс Нікополь, ремонт автомобілів Нікополь, діагностика авто">
+<title>AutoPro СТО — Профессиональний автосервіс у Нікополі</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a1628;
+    --navy-mid: #112240;
+    --graphite: #1e2b3c;
+    --graphite-light: #2d3e52;
+    --orange: #f5820d;
+    --orange-dark: #d96e00;
+    --orange-glow: rgba(245,130,13,0.15);
+    --white: #ffffff;
+    --gray: #8a9bb0;
+    --gray-light: #c8d4e0;
+    --text: #e0e8f0;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--navy);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ===== NAVBAR ===== */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 1000;
+    padding: 0 5%;
+    background: rgba(10,22,40,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(245,130,13,0.15);
+    display: flex; align-items: center; justify-content: space-between;
+    height: 70px;
+    transition: all .3s;
+  }
+  nav.scrolled {
+    background: rgba(10,22,40,0.97);
+    box-shadow: 0 4px 30px rgba(0,0,0,.4);
+  }
+  .logo {
+    display: flex; align-items: center; gap: 10px;
+    text-decoration: none;
+  }
+  .logo-icon {
+    width: 40px; height: 40px;
+    background: var(--orange);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 16px; color: var(--navy); font-weight: bold;
+    flex-shrink: 0;
+  }
+  .logo-text { font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 2px; color: var(--white); }
+  .logo-text span { color: var(--orange); }
+
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    text-decoration: none; color: var(--gray-light); font-size: 14px; font-weight: 500;
+    letter-spacing: .5px; transition: color .2s; position: relative;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px;
+    background: var(--orange); transition: width .3s;
+  }
+  .nav-links a:hover { color: var(--white); }
+  .nav-links a:hover::after { width: 100%; }
+
+  .nav-cta {
+    background: var(--orange); color: var(--navy) !important;
+    padding: 10px 20px; border-radius: 4px; font-weight: 700 !important;
+    transition: background .2s, transform .2s !important;
+  }
+  .nav-cta::after { display: none !important; }
+  .nav-cta:hover { background: var(--orange-dark) !important; transform: translateY(-1px); }
+
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .hamburger span { width: 26px; height: 2px; background: var(--white); border-radius: 2px; transition: .3s; }
+
+  /* ===== HERO ===== */
+  #hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    position: relative; overflow: hidden;
+    padding: 0 5%;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background: 
+      linear-gradient(135deg, rgba(10,22,40,0.97) 0%, rgba(10,22,40,0.7) 50%, rgba(10,22,40,0.85) 100%),
+      url('https://images.unsplash.com/photo-1625047509168-a7026f36de04?w=1600&q=80') center/cover no-repeat;
+  }
+
+  .hero-grid-overlay {
+    position: absolute; inset: 0; z-index: 1;
+    background-image: 
+      linear-gradient(rgba(245,130,13,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(245,130,13,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .hero-content {
+    position: relative; z-index: 2;
+    max-width: 720px;
+    padding-top: 70px;
+  }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--orange-glow); border: 1px solid rgba(245,130,13,0.3);
+    padding: 6px 16px; border-radius: 100px;
+    font-size: 13px; color: var(--orange); font-weight: 600; letter-spacing: 1px;
+    text-transform: uppercase; margin-bottom: 24px;
+    animation: fadeUp .6s ease both;
+  }
+  .hero-badge::before { content: ''; width: 8px; height: 8px; background: var(--orange); border-radius: 50%; animation: pulse 2s infinite; }
+
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(1.3)} }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(52px, 8vw, 96px);
+    line-height: .95; letter-spacing: 2px;
+    color: var(--white);
+    animation: fadeUp .6s .1s ease both;
+  }
+  .hero-title .accent { color: var(--orange); display: block; }
+
+  .hero-sub {
+    margin-top: 20px; font-size: 18px; color: var(--gray-light); line-height: 1.6;
+    max-width: 560px; font-weight: 300;
+    animation: fadeUp .6s .2s ease both;
+  }
+
+  .hero-actions {
+    margin-top: 36px; display: flex; gap: 16px; flex-wrap: wrap;
+    animation: fadeUp .6s .3s ease both;
+  }
+
+  .btn-primary {
+    background: var(--orange); color: var(--navy);
+    padding: 15px 32px; border: none; border-radius: 4px;
+    font-family: 'Outfit', sans-serif; font-size: 15px; font-weight: 700;
+    cursor: pointer; text-decoration: none; display: inline-block;
+    letter-spacing: .5px; transition: all .2s;
+    box-shadow: 0 0 30px rgba(245,130,13,0.35);
+  }
+  .btn-primary:hover { background: var(--orange-dark); transform: translateY(-2px); box-shadow: 0 6px 40px rgba(245,130,13,0.5); }
+
+  .btn-secondary {
+    background: transparent; color: var(--white);
+    padding: 15px 32px; border: 1px solid rgba(255,255,255,0.25); border-radius: 4px;
+    font-family: 'Outfit', sans-serif; font-size: 15px; font-weight: 500;
+    cursor: pointer; text-decoration: none; display: inline-block;
+    transition: all .2s;
+  }
+  .btn-secondary:hover { border-color: var(--orange); color: var(--orange); }
+
+  .hero-stats {
+    display: flex; gap: 48px; margin-top: 56px;
+    animation: fadeUp .6s .4s ease both;
+  }
+  .stat-item {}
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif; font-size: 48px;
+    color: var(--orange); line-height: 1;
+  }
+  .stat-label { font-size: 13px; color: var(--gray); text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
+
+  .hero-scroll {
+    position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+    z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 8px;
+    animation: fadeIn 1s 1s both;
+  }
+  .hero-scroll span { font-size: 11px; color: var(--gray); text-transform: uppercase; letter-spacing: 2px; }
+  .scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--orange), transparent); animation: scrollPulse 2s infinite; }
+  @keyframes scrollPulse { 0%{transform:scaleY(0);transform-origin:top} 50%{transform:scaleY(1)} 100%{transform:scaleY(0);transform-origin:bottom} }
+
+  /* ===== SECTIONS ===== */
+  section { padding: 100px 5%; }
+
+  .section-label {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12px; color: var(--orange); text-transform: uppercase; letter-spacing: 3px; font-weight: 600;
+    margin-bottom: 16px;
+  }
+  .section-label::before { content: ''; width: 24px; height: 2px; background: var(--orange); }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 5vw, 58px);
+    color: var(--white); line-height: 1; letter-spacing: 1px;
+  }
+
+  .section-title span { color: var(--orange); }
+
+  /* ===== SERVICES ===== */
+  #services { background: var(--navy-mid); }
+
+  .services-header { max-width: 600px; margin-bottom: 60px; }
+  .services-header p { margin-top: 16px; color: var(--gray); font-size: 16px; line-height: 1.7; }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+  }
+
+  .service-card {
+    background: var(--graphite);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 8px; padding: 32px;
+    position: relative; overflow: hidden;
+    transition: all .3s; cursor: default;
+  }
+  .service-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: var(--orange); transform: scaleX(0); transform-origin: left;
+    transition: transform .3s;
+  }
+  .service-card:hover { border-color: rgba(245,130,13,0.2); transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,.3); }
+  .service-card:hover::before { transform: scaleX(1); }
+
+  .service-icon {
+    width: 52px; height: 52px;
+    background: var(--orange-glow); border: 1px solid rgba(245,130,13,0.2);
+    border-radius: 8px; display: flex; align-items: center; justify-content: center;
+    margin-bottom: 20px; font-size: 24px;
+  }
+
+  .service-card h3 { font-size: 18px; font-weight: 700; color: var(--white); margin-bottom: 10px; }
+  .service-card p { font-size: 14px; color: var(--gray); line-height: 1.6; }
+
+  .service-num {
+    position: absolute; top: 24px; right: 24px;
+    font-family: 'Bebas Neue', sans-serif; font-size: 40px;
+    color: rgba(255,255,255,0.04); line-height: 1;
+  }
+
+  /* ===== WHY US ===== */
+  #why { background: var(--navy); position: relative; overflow: hidden; }
+  #why::before {
+    content: ''; position: absolute; right: -200px; top: 50%; transform: translateY(-50%);
+    width: 600px; height: 600px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(245,130,13,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+
+  .why-image-block {
+    position: relative; border-radius: 12px; overflow: hidden;
+    height: 520px;
+  }
+  .why-image-block img {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: brightness(.85);
+  }
+  .why-image-badge {
+    position: absolute; bottom: 28px; left: 28px;
+    background: var(--orange); color: var(--navy);
+    padding: 16px 24px; border-radius: 8px;
+    font-family: 'Bebas Neue', sans-serif; font-size: 20px;
+    letter-spacing: 1px;
+  }
+
+  .why-features { display: flex; flex-direction: column; gap: 24px; margin-top: 40px; }
+
+  .why-item {
+    display: flex; gap: 20px; align-items: flex-start;
+    padding: 24px; background: var(--graphite);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 8px; transition: all .3s;
+  }
+  .why-item:hover { border-color: rgba(245,130,13,0.2); background: var(--graphite-light); }
+
+  .why-item-icon {
+    width: 48px; height: 48px; flex-shrink: 0;
+    background: var(--orange-glow); border: 1px solid rgba(245,130,13,0.25);
+    border-radius: 8px; display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+  }
+  .why-item-text h4 { font-size: 16px; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+  .why-item-text p { font-size: 13px; color: var(--gray); line-height: 1.6; }
+
+  /* ===== GALLERY ===== */
+  #gallery { background: var(--navy-mid); }
+
+  .gallery-header { max-width: 500px; margin-bottom: 48px; }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto auto;
+    gap: 16px;
+  }
+
+  .gallery-item {
+    position: relative; overflow: hidden; border-radius: 8px;
+    cursor: pointer;
+  }
+  .gallery-item:first-child { grid-row: span 2; }
+  .gallery-item:nth-child(4) { grid-column: span 2; }
+
+  .gallery-item img {
+    width: 100%; height: 100%; object-fit: cover;
+    min-height: 200px;
+    transition: transform .5s, filter .3s;
+    filter: brightness(.8);
+    display: block;
+  }
+  .gallery-item:hover img { transform: scale(1.05); filter: brightness(1); }
+
+  .gallery-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(10,22,40,.8) 0%, transparent 50%);
+    display: flex; align-items: flex-end; padding: 20px;
+    opacity: 0; transition: opacity .3s;
+  }
+  .gallery-item:hover .gallery-overlay { opacity: 1; }
+  .gallery-overlay span { font-size: 14px; font-weight: 600; color: var(--white); }
+
+  /* ===== REVIEWS ===== */
+  #reviews { background: var(--navy); }
+
+  .reviews-header { text-align: center; max-width: 560px; margin: 0 auto 56px; }
+  .reviews-header p { margin-top: 16px; color: var(--gray); }
+
+  .reviews-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; }
+
+  .review-card {
+    background: var(--graphite); border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 10px; padding: 28px;
+    transition: all .3s;
+  }
+  .review-card:hover { border-color: rgba(245,130,13,0.2); transform: translateY(-3px); }
+
+  .review-stars { display: flex; gap: 3px; margin-bottom: 16px; }
+  .review-stars span { color: var(--orange); font-size: 16px; }
+
+  .review-text { font-size: 15px; color: var(--gray-light); line-height: 1.7; font-style: italic; margin-bottom: 20px; }
+  .review-author { display: flex; align-items: center; gap: 12px; }
+  .review-avatar {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Bebas Neue', sans-serif; font-size: 18px; color: var(--navy);
+    flex-shrink: 0;
+  }
+  .review-name { font-weight: 700; color: var(--white); font-size: 15px; }
+  .review-car { font-size: 13px; color: var(--gray); margin-top: 2px; }
+
+  /* ===== CONTACTS ===== */
+  #contacts { background: var(--navy-mid); }
+
+  .contacts-grid { display: grid; grid-template-columns: 1fr 1.3fr; gap: 60px; align-items: start; }
+
+  .contacts-info h3 { font-family: 'Bebas Neue', sans-serif; font-size: 36px; color: var(--white); letter-spacing: 1px; margin-bottom: 32px; }
+
+  .contact-item {
+    display: flex; gap: 16px; align-items: flex-start;
+    padding: 20px 0; border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  .contact-item:last-of-type { border-bottom: none; }
+
+  .contact-icon {
+    width: 44px; height: 44px; flex-shrink: 0;
+    background: var(--orange-glow); border: 1px solid rgba(245,130,13,0.25);
+    border-radius: 8px; display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+  }
+  .contact-label { font-size: 12px; color: var(--gray); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+  .contact-value { font-size: 16px; color: var(--white); font-weight: 600; }
+  .contact-value a { color: inherit; text-decoration: none; transition: color .2s; }
+  .contact-value a:hover { color: var(--orange); }
+
+  .work-hours { margin-top: 28px; padding: 20px; background: var(--graphite); border-radius: 8px; border: 1px solid rgba(255,255,255,0.06); }
+  .work-hours h4 { font-size: 14px; color: var(--orange); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+  .hours-row { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 14px; }
+  .hours-row:last-child { border-bottom: none; }
+  .hours-row .day { color: var(--gray); }
+  .hours-row .time { color: var(--white); font-weight: 500; }
+
+  /* FORM */
+  .contact-form-block h3 { font-family: 'Bebas Neue', sans-serif; font-size: 30px; color: var(--white); letter-spacing: 1px; margin-bottom: 24px; }
+
+  .form-group { margin-bottom: 16px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+
+  .form-group label, .form-row label { display: block; font-size: 12px; color: var(--gray); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+  .form-group input, .form-group textarea, .form-group select,
+  .form-row input, .form-row select {
+    width: 100%; padding: 13px 16px;
+    background: var(--graphite); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 6px; color: var(--white); font-family: 'Outfit', sans-serif; font-size: 15px;
+    transition: border-color .2s, box-shadow .2s; outline: none;
+    appearance: none;
+  }
+  .form-group input:focus, .form-group textarea:focus, .form-group select:focus,
+  .form-row input:focus, .form-row select:focus {
+    border-color: var(--orange); box-shadow: 0 0 0 3px rgba(245,130,13,0.1);
+  }
+  .form-group textarea { min-height: 100px; resize: vertical; }
+  .form-group select option { background: var(--graphite); }
+
+  .form-submit {
+    width: 100%; padding: 15px; background: var(--orange); color: var(--navy);
+    border: none; border-radius: 6px; font-family: 'Outfit', sans-serif;
+    font-size: 16px; font-weight: 700; cursor: pointer; letter-spacing: .5px;
+    transition: all .2s; margin-top: 8px;
+    box-shadow: 0 0 30px rgba(245,130,13,0.3);
+  }
+  .form-submit:hover { background: var(--orange-dark); transform: translateY(-1px); }
+
+  .map-container {
+    margin-top: 40px; border-radius: 10px; overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.08);
+    height: 280px;
+  }
+  .map-container iframe { width: 100%; height: 100%; border: none; }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background: var(--navy); border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 48px 5% 32px;
+  }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; margin-bottom: 40px; }
+  .footer-brand p { font-size: 14px; color: var(--gray); line-height: 1.7; margin-top: 16px; max-width: 320px; }
+
+  .footer-col h5 { font-size: 13px; color: var(--orange); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 16px; font-weight: 700; }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 10px; }
+  .footer-col ul li a { font-size: 14px; color: var(--gray); text-decoration: none; transition: color .2s; }
+  .footer-col ul li a:hover { color: var(--white); }
+
+  .footer-bottom { border-top: 1px solid rgba(255,255,255,0.06); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: gap; }
+  .footer-bottom p { font-size: 13px; color: var(--gray); }
+
+  /* ===== NOTIFICATION ===== */
+  .notification {
+    position: fixed; bottom: 24px; right: 24px; z-index: 9999;
+    background: var(--graphite); border: 1px solid var(--orange);
+    border-radius: 10px; padding: 16px 24px;
+    display: flex; align-items: center; gap: 12px;
+    box-shadow: 0 10px 40px rgba(0,0,0,.4);
+    transform: translateX(120%); transition: transform .4s cubic-bezier(.34,1.56,.64,1);
+  }
+  .notification.show { transform: translateX(0); }
+  .notification span:first-child { font-size: 22px; }
+  .notification-text strong { display: block; color: var(--white); font-size: 15px; }
+  .notification-text small { color: var(--gray); font-size: 13px; }
+
+  /* ===== MOBILE NAV ===== */
+  .mobile-menu {
+    position: fixed; top: 70px; left: 0; right: 0; bottom: 0; z-index: 999;
+    background: rgba(10,22,40,0.98); backdrop-filter: blur(16px);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 32px; list-style: none;
+    transform: translateX(-100%); transition: transform .3s ease;
+  }
+  .mobile-menu.open { transform: translateX(0); }
+  .mobile-menu li a {
+    font-family: 'Bebas Neue', sans-serif; font-size: 32px; letter-spacing: 2px;
+    color: var(--white); text-decoration: none; transition: color .2s;
+  }
+  .mobile-menu li a:hover { color: var(--orange); }
+
+  /* ===== SCROLL ANIMATIONS ===== */
+  .reveal {
+    opacity: 0; transform: translateY(40px);
+    transition: opacity .6s ease, transform .6s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 1024px) {
+    .why-grid { grid-template-columns: 1fr; }
+    .why-image-block { height: 360px; }
+    .contacts-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .hero-stats { gap: 28px; }
+    .stat-num { font-size: 36px; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; }
+    .gallery-item:first-child { grid-row: auto; }
+    .gallery-item:nth-child(4) { grid-column: auto; }
+    .form-row { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+    section { padding: 70px 5%; }
+    .hero-actions { flex-direction: column; align-items: flex-start; }
+    .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+  }
+
+  @media (max-width: 480px) {
+    .gallery-grid { grid-template-columns: 1fr; }
+    .hero-stats { flex-wrap: wrap; gap: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a href="#hero" class="logo">
+    <div class="logo-icon">AP</div>
+    <span class="logo-text">AUTO<span>PRO</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#services">Послуги</a></li>
+    <li><a href="#why">Про нас</a></li>
+    <li><a href="#gallery">Галерея</a></li>
+    <li><a href="#reviews">Відгуки</a></li>
+    <li><a href="#contacts" class="nav-cta">Записатись</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<ul class="mobile-menu" id="mobileMenu">
+  <li><a href="#services" onclick="toggleMenu()">Послуги</a></li>
+  <li><a href="#why" onclick="toggleMenu()">Про нас</a></li>
+  <li><a href="#gallery" onclick="toggleMenu()">Галерея</a></li>
+  <li><a href="#reviews" onclick="toggleMenu()">Відгуки</a></li>
+  <li><a href="#contacts" onclick="toggleMenu()">Контакти</a></li>
+</ul>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge">🔧 №1 Автосервіс у Нікополі</div>
+    <h1 class="hero-title">
+      Профіональний<br>
+      <span class="accent">Ремонт Авто</span>
+    </h1>
+    <p class="hero-sub">Довіряйте своє авто справжнім майстрам. Сучасне обладнання, гарантія на роботи та чесні ціни — це AutoPro в Нікополі.</p>
+    <div class="hero-actions">
+      <a href="#contacts" class="btn-primary">Записатись на ремонт</a>
+      <a href="#services" class="btn-secondary">Наші послуги →</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">12+</div>
+        <div class="stat-label">Років досвіду</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">5000+</div>
+        <div class="stat-label">Задоволених клієнтів</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">98%</div>
+        <div class="stat-label">Позитивних відгуків</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>Гортай</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="services-header reveal">
+    <div class="section-label">Що ми робимо</div>
+    <h2 class="section-title">Наші <span>Послуги</span></h2>
+    <p>Повний спектр послуг з технічного обслуговування та ремонту автомобілів будь-яких марок і моделей.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-icon">🔍</div>
+      <div class="service-num">01</div>
+      <h3>Діагностика автомобіля</h3>
+      <p>Комплексна перевірка всіх систем автомобіля. Виявляємо несправності на ранніх стадіях.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">⚙️</div>
+      <div class="service-num">02</div>
+      <h3>Ремонт двигуна</h3>
+      <p>Капітальний та поточний ремонт двигунів усіх видів. Заміна ГРМ, поршневої групи.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">🚗</div>
+      <div class="service-num">03</div>
+      <h3>Ремонт ходової частини</h3>
+      <p>Відновлення підвіски, рульового управління, гальмівної системи. Балансування коліс.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">🛢️</div>
+      <div class="service-num">04</div>
+      <h3>Замена масла і рідин</h3>
+      <p>Заміна оливи, антифризу, гальмівної та трансмісійної рідини. Тільки якісні матеріали.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">⚡</div>
+      <div class="service-num">05</div>
+      <h3>Електрика та електроніка</h3>
+      <p>Діагностика та ремонт електричних систем, ABS, ESP, систем запалювання.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">🔧</div>
+      <div class="service-num">06</div>
+      <h3>Шиномонтаж</h3>
+      <p>Монтаж та демонтаж шин, балансування, перевірка та накачка коліс азотом.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">💻</div>
+      <div class="service-num">07</div>
+      <h3>Комп'ютерна діагностика</h3>
+      <p>Зчитування кодів помилок, прошивка блоків керування, скидання адаптацій.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">❄️</div>
+      <div class="service-num">08</div>
+      <h3>Обслуговування кондиціонерів</h3>
+      <p>Заправка фреоном, перевірка герметичності, чистка системи кондиціонування.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section id="why">
+  <div class="why-grid">
+    <div class="why-image-block reveal">
+      <img src="https://images.unsplash.com/photo-1632823469850-2f77dd9c7f93?w=800&q=80" alt="Майстри за роботою" loading="lazy">
+      <div class="why-image-badge">Гарантія якості на всі роботи</div>
+    </div>
+    <div class="reveal">
+      <div class="section-label">Наші переваги</div>
+      <h2 class="section-title">Чому обирають <span>нас</span></h2>
+      <div class="why-features">
+        <div class="why-item">
+          <div class="why-item-icon">👨‍🔧</div>
+          <div class="why-item-text">
+            <h4>Досвідчені майстри</h4>
+            <p>Наші механіки мають сертифікати та стаж роботи понад 10 років. Постійно підвищуємо кваліфікацію.</p>
+          </div>
+        </div>
+        <div class="why-item">
+          <div class="why-item-icon">🏭</div>
+          <div class="why-item-text">
+            <h4>Сучасне обладнання</h4>
+            <p>Працюємо з найновішим діагностичним та ремонтним обладнанням провідних виробників.</p>
+          </div>
+        </div>
+        <div class="why-item">
+          <div class="why-item-icon">✅</div>
+          <div class="why-item-text">
+            <h4>Гарантія на роботи</h4>
+            <p>Надаємо офіційну гарантію на всі виконані роботи та встановлені запчастини.</p>
+          </div>
+        </div>
+        <div class="why-item">
+          <div class="why-item-icon">💰</div>
+          <div class="why-item-text">
+            <h4>Чесні ціни</h4>
+            <p>Прозоре ціноутворення без прихованих доплат. Попередній кошторис перед початком робіт.</p>
+          </div>
+        </div>
+        <div class="why-item">
+          <div class="why-item-icon">⚡</div>
+          <div class="why-item-text">
+            <h4>Швидке виконання</h4>
+            <p>Цінуємо ваш час. Більшість робіт виконуємо в день звернення.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="gallery-header reveal">
+    <div class="section-label">Наша робота</div>
+    <h2 class="section-title">Галерея <span>Сервісу</span></h2>
+  </div>
+  <div class="gallery-grid reveal">
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=600&q=80" alt="Сервіс" loading="lazy">
+      <div class="gallery-overlay"><span>Наш автосервіс</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=600&q=80" alt="Ремонт двигуна" loading="lazy">
+      <div class="gallery-overlay"><span>Ремонт двигуна</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=600&q=80" alt="Автомобіль" loading="lazy">
+      <div class="gallery-overlay"><span>Обслуговування авто</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80" alt="Підйомник" loading="lazy">
+      <div class="gallery-overlay"><span>Сучасне обладнання</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1517524008697-84bbe3c3fd98?w=600&q=80" alt="Діагностика" loading="lazy">
+      <div class="gallery-overlay"><span>Комп'ютерна діагностика</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews">
+  <div class="reviews-header reveal">
+    <div class="section-label">Думки клієнтів</div>
+    <h2 class="section-title">Відгуки <span>Клієнтів</span></h2>
+    <p>Нам довіряють тисячі власників автомобілів у Нікополі та регіоні</p>
+  </div>
+  <div class="reviews-grid">
+    <div class="review-card reveal">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">«Звертався з проблемою двигуна — шум і витрата масла. Майстри швидко виявили причину, дали детальний кошторис. Зробили все якісно та вчасно. Гарантія дотримана. Дуже задоволений!»</p>
+      <div class="review-author">
+        <div class="review-avatar">ОМ</div>
+        <div>
+          <div class="review-name">Олексій Мороз</div>
+          <div class="review-car">Toyota Camry 2018</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-card reveal">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">«Їздила на шиномонтаж і комп'ютерну діагностику. Все зробили за годину. Ціни адекватні, ніяких зайвих "робіт". Пояснили що і чому треба замінити. Буду звертатись ще.»</p>
+      <div class="review-author">
+        <div class="review-avatar">НК</div>
+        <div>
+          <div class="review-name">Наталія Коваль</div>
+          <div class="review-car">Volkswagen Golf</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-card reveal">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">«Кращий сервіс у Нікополі! Ремонтував ходову після ям. Все зробили швидко, якісно, дали гарантію 6 місяців. Майстри знають свою справу. Рекомендую всім!»</p>
+      <div class="review-author">
+        <div class="review-avatar">ВС</div>
+        <div>
+          <div class="review-name">Василь Семенченко</div>
+          <div class="review-car">Skoda Octavia</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTS -->
+<section id="contacts">
+  <div class="reveal" style="margin-bottom:48px;">
+    <div class="section-label">Зв'яжіться з нами</div>
+    <h2 class="section-title">Контакти та <span>Запис</span></h2>
+  </div>
+  <div class="contacts-grid">
+    <div class="reveal">
+      <div class="contacts-info">
+        <h3>Де нас знайти</h3>
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div>
+            <div class="contact-label">Адреса</div>
+            <div class="contact-value">вул. Електрометалургів, 42,<br>Нікополь, Дніпропетровська обл.</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📞</div>
+          <div>
+            <div class="contact-label">Телефон</div>
+            <div class="contact-value"><a href="tel:+380566810000">+38 (056) 681-00-00</a></div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📱</div>
+          <div>
+            <div class="contact-label">Мобільний</div>
+            <div class="contact-value"><a href="tel:+380671234567">+38 (067) 123-45-67</a></div>
+          </div>
+        </div>
+      </div>
+      <div class="work-hours">
+        <h4>🕐 Графік роботи</h4>
+        <div class="hours-row"><span class="day">Понеділок – П'ятниця</span><span class="time">08:00 – 19:00</span></div>
+        <div class="hours-row"><span class="day">Субота</span><span class="time">09:00 – 17:00</span></div>
+        <div class="hours-row"><span class="day">Неділя</span><span class="time">Вихідний</span></div>
+      </div>
+      <div class="map-container">
+        <iframe 
+          src="https://maps.google.com/maps?q=Нікополь,+Дніпропетровська+область&t=&z=14&ie=UTF8&iwloc=&output=embed"
+          allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+    </div>
+
+    <div class="contact-form-block reveal">
+      <h3>Записатись на Сервіс</h3>
+      <div id="bookingForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Ваше ім'я</label>
+            <input type="text" id="fname" placeholder="Іван Петренко">
+          </div>
+          <div class="form-group">
+            <label>Телефон</label>
+            <input type="tel" id="fphone" placeholder="+38 (0__)">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Марка та модель авто</label>
+          <input type="text" id="fcar" placeholder="Toyota Camry 2020">
+        </div>
+        <div class="form-group">
+          <label>Послуга</label>
+          <select id="fservice">
+            <option value="">Оберіть послугу</option>
+            <option>Діагностика автомобіля</option>
+            <option>Ремонт двигуна</option>
+            <option>Ремонт ходової частини</option>
+            <option>Заміна масла та рідин</option>
+            <option>Електрика та електроніка</option>
+            <option>Шиномонтаж</option>
+            <option>Комп'ютерна діагностика</option>
+            <option>Обслуговування кондиціонера</option>
+            <option>Інше</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Опис проблеми</label>
+          <textarea id="fmsg" placeholder="Опишіть несправність або що потрібно зробити..."></textarea>
+        </div>
+        <button class="form-submit" onclick="submitForm()">🔧 Записатись на ремонт</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="#hero" class="logo">
+        <div class="logo-icon">AP</div>
+        <span class="logo-text">AUTO<span>PRO</span></span>
+      </a>
+      <p>Професійний автосервіс у Нікополі. Якісний ремонт, сучасне обладнання, гарантія на всі роботи. Довіряйте своє авто справжнім майстрам.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Послуги</h5>
+      <ul>
+        <li><a href="#services">Діагностика</a></li>
+        <li><a href="#services">Ремонт двигуна</a></li>
+        <li><a href="#services">Ходова частина</a></li>
+        <li><a href="#services">Електрика</a></li>
+        <li><a href="#services">Шиномонтаж</a></li>
+        <li><a href="#services">Кондиціонери</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Контакти</h5>
+      <ul>
+        <li><a href="tel:+380566810000">+38 (056) 681-00-00</a></li>
+        <li><a href="tel:+380671234567">+38 (067) 123-45-67</a></li>
+        <li><a href="#contacts">вул. Електрометалургів, 42</a></li>
+        <li><a href="#contacts">Нікополь</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 AutoPro СТО, Нікополь. Всі права захищені.</p>
+    <p style="color:var(--gray);font-size:13px;">Розроблено з ❤️ для автолюбителів Нікополя</p>
+  </div>
+</footer>
+
+<!-- NOTIFICATION -->
+<div class="notification" id="notification">
+  <span>✅</span>
+  <div class="notification-text">
+    <strong>Запит надіслано!</strong>
+    <small>Ми зателефонуємо вам найближчим часом</small>
+  </div>
+</div>
+
+<script>
+  // Navbar scroll
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  // Mobile menu
+  function toggleMenu() {
+    const menu = document.getElementById('mobileMenu');
+    const ham = document.getElementById('hamburger');
+    menu.classList.toggle('open');
+    const spans = ham.querySelectorAll('span');
+    if (menu.classList.contains('open')) {
+      spans[0].style.transform = 'rotate(45deg) translate(5px,5px)';
+      spans[1].style.opacity = '0';
+      spans[2].style.transform = 'rotate(-45deg) translate(5px,-5px)';
+    } else {
+      spans.forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
+    }
+  }
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Form submit
+  function submitForm() {
+    const name = document.getElementById('fname').value.trim();
+    const phone = document.getElementById('fphone').value.trim();
+    if (!name || !phone) {
+      alert('Будь ласка, вкажіть ваше ім\'я та номер телефону.');
+      return;
+    }
+    const notif = document.getElementById('notification');
+    notif.classList.add('show');
+    setTimeout(() => notif.classList.remove('show'), 4000);
+    document.getElementById('fname').value = '';
+    document.getElementById('fphone').value = '';
+    document.getElementById('fcar').value = '';
+    document.getElementById('fservice').value = '';
+    document.getElementById('fmsg').value = '';
+  }
+</script>
+</body>
+</html>
